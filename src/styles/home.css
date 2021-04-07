@@ -1,0 +1,37 @@
+.flexBox
+{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+.flexHeader
+{
+    border-bottom: rgb(163, 163, 163) solid;
+    border-top: rgb(163, 163, 163) solid;
+    margin-bottom: 30px;
+    border-width: 1px;
+    flex-direction: row;
+    display: flex;
+    align-items: baseline;
+}
+
+.flexContainer
+{
+    flex-direction: row;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.flexContainer>* {
+    
+    flex: 0 0 16%;
+    }
+
+h1
+{
+    color:white;
+    margin-right: 30px;
+}

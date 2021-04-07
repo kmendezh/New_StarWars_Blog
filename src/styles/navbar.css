@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css?family=Short Stack");
+
+.swImage
+{
+    width: 240px;
+    height: 100px;
+}
+
+.ddicon
+{
+    font-family: "Short Stack";
+}
+
+.ddtext
+{
+    font-size: 30px;
+    color:white;
+}
