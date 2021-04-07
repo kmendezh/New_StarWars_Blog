@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, Redirect } from "react-router-dom";
 import { func } from "prop-types";
 import { Context } from "../store/appContext";
 import "/workspace/react-hello-webapp/src/styles/login.css";
@@ -8,11 +8,34 @@ export function LogIn() {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		console.log("Button pressed");
+		const myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+
+		const raw = JSON.stringify({
+			email: email,
+			password: password
+		});
+
+		const requestOptions = {
+			method: "POST",
+			headers: myHeaders,
+			body: raw,
+			redirect: "follow"
+		};
+
+		fetch("https://3000-crimson-locust-diy39vl2.ws-us03.gitpod.io/login", requestOptions)
+			.then(response => response.json())
+			.then(result => {
+				console.log(result.msg);
+			})
+			.catch(error => {
+				console.log("error", error);
+			});
 	};
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [authentication, setAuth] = useState(false);
 
 	return (
 		<form onSubmit={handleSubmit}>
@@ -60,6 +83,7 @@ export function LogIn() {
 					<p> Do not have an account? Sign up</p>
 				</div>
 			</div>
+			{authentication ? <Redirect to="/home" /> : null}
 		</form>
 	);
 }
