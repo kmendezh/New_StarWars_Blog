@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { CardDescription } from "/workspace/react-hello-webapp/src/js/component/cards.js";
+import { CardDescription } from "/workspace/New_StarWars_Blog/src/js/component/cards.js";
 import { func } from "prop-types";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";

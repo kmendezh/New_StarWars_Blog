@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "/workspace/react-hello-webapp/src/styles/footer.css";
+import "/workspace/New_StarWars_Blog/src/styles/footer.css";
 
 export const Footer = () => (
 	<footer className="footerPage row">

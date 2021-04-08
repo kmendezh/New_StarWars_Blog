@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
-import "/workspace/react-hello-webapp/src/styles/cards.css";
+import "/workspace/New_StarWars_Blog/src/styles/cards.css";
 import { func } from "prop-types";
 import { Context } from "../store/appContext";
 

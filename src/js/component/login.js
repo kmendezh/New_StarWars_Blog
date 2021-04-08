@@ -2,7 +2,9 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, Redirect } from "react-router-dom";
 import { func } from "prop-types";
 import { Context } from "../store/appContext";
-import "/workspace/react-hello-webapp/src/styles/login.css";
+import "/workspace/New_StarWars_Blog/src/styles/login.css";
+
+const urlAPI = "https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/login";
 
 export function LogIn() {
 	const handleSubmit = e => {
@@ -23,10 +25,16 @@ export function LogIn() {
 			redirect: "follow"
 		};
 
-		fetch("https://3000-crimson-locust-diy39vl2.ws-us03.gitpod.io/login", requestOptions)
+		fetch(urlAPI, requestOptions)
 			.then(response => response.json())
 			.then(result => {
 				console.log(result.msg);
+				// If the credentials were correct, enter to Home and save the token and user ID
+				if (result.msg == "ok") {
+					setAuth(true);
+					sessionStorage.setItem("token", result.token);
+					console.log(result.token);
+				}
 			})
 			.catch(error => {
 				console.log("error", error);

@@ -2,19 +2,6 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			],
-
 			planetsArray: [],
 
 			peopleArray: [],
@@ -27,31 +14,43 @@ const getState = ({ getStore, getActions, setStore }) => {
 				{ peopleStartIndex: 0, peopleIndex: 6 },
 				{ planetStartIndex: 0, planetIndex: 6 },
 				{ starshipStartIndex: 1, starshipIndex: 11 }
-			]
+			],
+
+			visibilityUsername: "hidden",
+
+			userName: "",
+
+			userId: ""
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
+			// Set the username
+			setUserName: user => {
 				//get the store
 				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
-
+				let tmp = store.userName;
+				tmp = user;
 				//reset the global store
-				setStore({ demo: demo });
+				setStore({ userName: tmp });
+			},
+
+			// Set the userID
+			setUserID: id => {
+				//get the store
+				const store = getStore();
+				let tmp = store.userId;
+				tmp = id;
+				//reset the global store
+				setStore({ userId: tmp });
+			},
+
+			setVisibility: () => {
+				//get the store
+				const store = getStore();
+				// Change the visibility
+				let vis = store.visibilityUsername;
+				vis = "visible";
+				//reset the global store
+				setStore({ visibilityUsername: vis });
 			},
 
 			showMore: type => {
