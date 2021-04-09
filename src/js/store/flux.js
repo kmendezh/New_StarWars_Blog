@@ -20,9 +20,67 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			userName: "",
 
-			userId: ""
+			userId: "",
+
+			loggedIn: false
 		},
 		actions: {
+			// Load the initial favorite list
+			loadInitialFavList: () => {
+				// Get the actions
+				const actions = getActions();
+
+				let myHeaders = new Headers();
+				let authString = "Bearer " + sessionStorage.getItem("token");
+				myHeaders.append("Authorization", authString);
+
+				let requestOptions = {
+					method: "GET",
+					headers: myHeaders,
+					redirect: "follow"
+				};
+				// Endpoint to get the favorite list
+				fetch("https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/get_fav_user_logged", requestOptions)
+					.then(response => response.json())
+					.then(result => {
+						console.log("Favorites");
+						console.log(result[0].id);
+						// Load the favorites obtained from the user logged
+						if (result[0].id != undefined) {
+							actions.loadFavorites(result);
+						}
+					})
+					.catch(error => console.log("error", error));
+			},
+
+			// Get the user that logged in
+			getUserLogged: () => {
+				let myHeaders2 = new Headers();
+				let authString2 = "Bearer " + sessionStorage.getItem("token");
+				myHeaders2.append("Authorization", authString2);
+
+				var requestOptions2 = {
+					method: "GET",
+					headers: myHeaders2,
+					redirect: "follow"
+				};
+
+				fetch("https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/get_logged_user", requestOptions2)
+					.then(response => response.text())
+					.then(result => console.log(result))
+					.catch(error => console.log("error", error));
+			},
+
+			// Indicate if the user has logged in
+			setLogin: state => {
+				//get the store
+				const store = getStore();
+				let tmp = store.loggedIn;
+				tmp = state;
+				//reset the global store
+				setStore({ loggedIn: tmp });
+			},
+
 			// Set the username
 			setUserName: user => {
 				//get the store
@@ -80,6 +138,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
+			loadFavorites: fav_Array => {
+				// Get the store
+				const store = getStore();
+				// Create tmp variable to store the favorites array
+				let tmpArray = store.arrayOfFavorites;
+				tmpArray = fav_Array;
+				setStore({ arrayOfFavorites: tmpArray });
+				console.log("Fav added");
+				console.log(fav_Array);
+			},
+
 			addFavorites: cardName => {
 				// Get the store
 				const store = getStore();
@@ -123,10 +192,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// Define initial amount of items to retrieve and page
 				let startIdx = store.indexArray[0].peopleStartIndex;
 				let limitLength = store.indexArray[0].peopleIndex;
-				console.log("Limit Length:");
-				console.log(limitLength);
 				// URLs of the SWAPI
-				let urlStringPeople = "https://www.swapi.tech/api/people/";
+				let urlStringPeople = "https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/get_character_by_id/";
 
 				// GET Request Header
 				let requestOptions = {
@@ -142,14 +209,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 					await fetch(tmpUrl, requestOptions)
 						.then(response => response.json())
 						.then(result => {
-							result.message == "ok" ? tmpArray.push(result) : console.log("Undefined message");
+							result.name != undefined ? tmpArray.push(result) : console.log("Undefined message");
 							console.log(result);
 						})
 						.catch(error => console.log("error", error));
 				}
 
 				//reset the global store
-				setStore({ tmpArray: tmpArray });
+				setStore({ peopleArray: tmpArray });
 			},
 
 			getPlanetFetch: async () => {

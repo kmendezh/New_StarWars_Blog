@@ -15,11 +15,11 @@ export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 
 	// Dropdown Favorite Item Format
-	const ddFavoriteItems = store.arrayOfFavorites.map((element, index) => (
-		<div className="ddicon" key={index.toString()}>
-			<div className="row">
+	const ddFavoriteItems = store.arrayOfFavorites.map(element => (
+		<div className="ddicon" key={element.id.toString()}>
+			<div className="row" style={{ width: "95%" }}>
 				<div className="col-8">
-					<DropdownItem>{element}</DropdownItem>
+					<DropdownItem>{element.object_name}</DropdownItem>
 				</div>
 				<div className="col-4">
 					<DropdownItem onClick={() => actions.removeFavorites(index)}>

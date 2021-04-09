@@ -7,6 +7,9 @@ import "/workspace/New_StarWars_Blog/src/styles/login.css";
 const urlAPI = "https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/login";
 
 export function LogIn() {
+	// Get Store
+	const { store, actions } = useContext(Context);
+
 	const handleSubmit = e => {
 		e.preventDefault();
 
@@ -31,6 +34,7 @@ export function LogIn() {
 				console.log(result.msg);
 				// If the credentials were correct, enter to Home and save the token and user ID
 				if (result.msg == "ok") {
+					actions.setLogin(true);
 					setAuth(true);
 					sessionStorage.setItem("token", result.token);
 					console.log(result.token);

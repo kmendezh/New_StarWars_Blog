@@ -22,21 +22,21 @@ export function CardCharacter(prop) {
 				style={{ width: "100%", height: "200px" }}
 			/>
 			<div className="card-body">
-				<h4 className="card-title">{prop.peopleInfo.result.properties.name}</h4>
+				<h4 className="card-title">{prop.peopleInfo.name}</h4>
 				<div className="card-text">
 					<div className="row">
-						<p> Height: {prop.peopleInfo.result.properties.height}</p>
+						<p> Height: {prop.peopleInfo.height}</p>
 					</div>
 					<div className="row">
-						<p> Mass: {prop.peopleInfo.result.properties.mass}</p>
+						<p> Mass: {prop.peopleInfo.mass}</p>
 					</div>
 					<div className="row">
-						<p> Gender: {prop.peopleInfo.result.properties.gender}</p>
+						<p> Gender: {prop.peopleInfo.gender}</p>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-8">
-						<Link to={"/character/" + prop.peopleInfo.result._id}>
+						<Link to={"/character/" + prop.peopleInfo.id}>
 							<div className="btn btn-secondary"> More information </div>
 						</Link>
 					</div>
@@ -44,7 +44,7 @@ export function CardCharacter(prop) {
 						<a
 							href="#!"
 							className="btn btn-secondary"
-							onClick={() => actions.addFavorites(prop.peopleInfo.result.properties.name)}>
+							onClick={() => actions.addFavorites(prop.peopleInfo.name)}>
 							<i className="fas fa-heart" style={{ color: "white", fontSize: "20px" }} />
 						</a>
 					</div>
