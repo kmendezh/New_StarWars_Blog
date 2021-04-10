@@ -135,34 +135,65 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({ arrayOfFavorites: tmpArray });
 			},
 
-			addFavorites: cardObject => {
-				// // Get the store
-				// const store = getStore();
+			addFavorites: async cardObject => {
+				// If the like button was pressed twice, remove the item from the list
+				// Get the store
+				const store = getStore();
+				let tmpArray = store.arrayOfFavorites;
+				// Get actions
+				const actions = getActions();
 
-				// // Get actions
-				// const actions = getActions();
+				// Create a tmp object to store the id and the name
+				let tmpObj = {
+					name: cardObject.name,
+					id: cardObject.id
+				};
 
-				// let tmpArray = store.arrayOfFavorites;
-				// // If it is already in the list, remove it
-				// for (let i = 0; i < tmpArray.length; i++) {
-				// 	if (cardName == tmpArray[i]) {
-				// 		actions.removeFavorites(i);
-				// 	}
-				// }
-				// tmpArray.push(cardName);
-				// //reset the global store
-				// setStore({ tmpArray: tmpArray });
+				// If it is already in the list, remove it
+				for (let i = 0; i < tmpArray.length; i++) {
+					if (cardObject.name == tmpArray[i].name) {
+						actions.removeFavorites(tmpObj);
+					}
+				}
+
+				// Load the Selected Favorite to the list
+				var myHeaders = new Headers();
+				let auth = "Bearer " + sessionStorage.getItem("token");
+				myHeaders.append("Authorization", auth);
+				myHeaders.append("Content-Type", "application/json");
+
+				var raw = JSON.stringify({
+					object_Type: cardObject.type,
+					object_Name: cardObject.name
+				});
+
+				var requestOptions = {
+					method: "POST",
+					headers: myHeaders,
+					body: raw,
+					redirect: "follow"
+				};
+
+				fetch("https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/add_fav_to_list", requestOptions)
+					.then(response => response.text())
+					.then(result => console.log(result))
+					.catch(error => console.log("error", error));
+
+				tmpArray.push(tmpObj);
+				console.log(tmpArray);
+				// reset the global store
+				setStore({ arrayOfFavorites: tmpArray });
 				console.log(cardObject);
 			},
 
-			removeFavorites: index => {
+			removeFavorites: async favObj => {
 				// Get the store
 				const store = getStore();
 				let tmpArray = store.arrayOfFavorites;
 				let auxArray = [];
 				for (let i = 0; i < store.arrayOfFavorites.length; i++) {
 					// Copy all the data except the item to be removed
-					if (i != index) {
+					if (tmpArray.name != favObj.name) {
 						auxArray.push(store.arrayOfFavorites[i]);
 					}
 				}
@@ -170,6 +201,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ arrayOfFavorites: tmpArray });
 				console.log(store.arrayOfFavorites);
+
+				// Remove the Favorite from the API
+				let myHeaders = new Headers();
+				let auth = "Bearer " + sessionStorage.getItem("token");
+				myHeaders.append("Authorization", auth);
+
+				let requestOptions = {
+					method: "DELETE",
+					headers: myHeaders,
+					redirect: "follow"
+				};
+
+				let url =
+					"https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/delete_fav_from_list/" +
+					favObj.id.toString();
+
+				await fetch(url, requestOptions)
+					.then(response => response.text())
+					.then(result => console.log(result))
+					.catch(error => console.log("error", error));
 			},
 
 			getPeopleFetch: async () => {

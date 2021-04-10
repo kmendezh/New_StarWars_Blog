@@ -19,10 +19,10 @@ export const Navbar = () => {
 		<div className="ddicon" key={element.id.toString()}>
 			<div className="row" style={{ width: "95%" }}>
 				<div className="col-8">
-					<DropdownItem>{element.object_name}</DropdownItem>
+					<DropdownItem>{element.name}</DropdownItem>
 				</div>
 				<div className="col-4">
-					<DropdownItem onClick={() => actions.removeFavorites(index)}>
+					<DropdownItem onClick={() => actions.removeFavorites(element)}>
 						<i className="fas fa-trash" />
 					</DropdownItem>
 				</div>

@@ -23,9 +23,6 @@ export const Home = () => {
 			// Store the username and user ID of the person that logged in
 			actions.getUserLogged();
 
-			// Get the Favorite List
-			actions.loadInitialFavList();
-
 			sessionStorage.setItem("login", "Done");
 		}
 	}, []);

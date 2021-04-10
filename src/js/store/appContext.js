@@ -40,6 +40,9 @@ const injectContext = PassedComponent => {
 
 			// Get Starships
 			state.actions.getStarShipsFetch();
+
+			// Get the Favorite List
+			state.actions.loadInitialFavList();
 		}, []);
 
 		// The initial value for the context is not null anymore, but the current state of this component,
