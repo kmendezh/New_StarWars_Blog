@@ -133,27 +133,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let tmpArray = store.arrayOfFavorites;
 				tmpArray = fav_Array;
 				setStore({ arrayOfFavorites: tmpArray });
-				console.log("Fav added");
-				console.log(fav_Array);
 			},
 
-			addFavorites: cardName => {
-				// Get the store
-				const store = getStore();
+			addFavorites: cardObject => {
+				// // Get the store
+				// const store = getStore();
 
-				// Get actions
-				const actions = getActions();
+				// // Get actions
+				// const actions = getActions();
 
-				let tmpArray = store.arrayOfFavorites;
-				// If it is already in the list, remove it
-				for (let i = 0; i < tmpArray.length; i++) {
-					if (cardName == tmpArray[i]) {
-						actions.removeFavorites(i);
-					}
-				}
-				tmpArray.push(cardName);
-				//reset the global store
-				setStore({ tmpArray: tmpArray });
+				// let tmpArray = store.arrayOfFavorites;
+				// // If it is already in the list, remove it
+				// for (let i = 0; i < tmpArray.length; i++) {
+				// 	if (cardName == tmpArray[i]) {
+				// 		actions.removeFavorites(i);
+				// 	}
+				// }
+				// tmpArray.push(cardName);
+				// //reset the global store
+				// setStore({ tmpArray: tmpArray });
+				console.log(cardObject);
 			},
 
 			removeFavorites: index => {
@@ -235,7 +234,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ planetsArray: tmpArray });
-				console.log(store.planetsArray);
 			},
 
 			getStarShipsFetch: async () => {
@@ -244,7 +242,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				// Define initial amount of items to retrieve and page
 				let startIdx = store.indexArray[2].starshipStartIndex;
-				let limitLength = store.indexArray[2].starshipIndex; // Some indexes never worked like /1 and /4
+				let limitLength = store.indexArray[2].starshipIndex;
 				// URLs of the SWAPI
 				let urlStringStarships = "https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/get_starship_by_id/";
 

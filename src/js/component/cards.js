@@ -13,6 +13,25 @@ const urlImageDescription = "https://radiorumba.fm/wp-content/uploads/2015/11/Da
 export function CardCharacter(prop) {
 	// Get Store
 	const { store, actions } = useContext(Context);
+
+	// Create a tmp variable to classify the type of card in case that the user add it as favorite
+	let tmpObject = {
+		id: prop.peopleInfo.id,
+		name: prop.peopleInfo.name,
+		height: prop.peopleInfo.height,
+		mass: prop.peopleInfo.mass,
+		hair_color: prop.peopleInfo.hair_color,
+		skin_color: prop.peopleInfo.skin_color,
+		eye_color: prop.peopleInfo.eye_color,
+		birth_year: prop.peopleInfo.birth_year,
+		gender: prop.peopleInfo.gender,
+		created: prop.peopleInfo.created,
+		edited: prop.peopleInfo.edited,
+		homeworld: prop.peopleInfo.homeworld,
+		description: prop.peopleInfo.description,
+		url: prop.peopleInfo.url,
+		type: "C"
+	};
 	return (
 		<div className="card mr-2" style={{ marginBottom: "20px" }}>
 			<img
@@ -41,10 +60,7 @@ export function CardCharacter(prop) {
 						</Link>
 					</div>
 					<div className="col-4">
-						<a
-							href="#!"
-							className="btn btn-secondary"
-							onClick={() => actions.addFavorites(prop.peopleInfo.name)}>
+						<a href="#!" className="btn btn-secondary" onClick={() => actions.addFavorites(tmpObject)}>
 							<i className="fas fa-heart" style={{ color: "white", fontSize: "20px" }} />
 						</a>
 					</div>
@@ -139,25 +155,6 @@ export function CardVehicle(prop) {
 						</a>
 					</div>
 				</div>
-			</div>
-		</div>
-	);
-}
-
-export function CardDescription() {
-	return (
-		<div className="row">
-			<div className="col-6">
-				<img src={urlImageDescription} />
-			</div>
-			<div className="col-6">
-				<h1>
-					<strong> Title </strong>
-				</h1>
-				<p className="textDescription">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel eros lacus. Sed convallis justo
-					quis scelerisque ullamcorper. Etiam cursus.
-				</p>
 			</div>
 		</div>
 	);

@@ -23,7 +23,7 @@ export function CharacterDescription(props) {
 
 	// Find the element to be displayed
 	const findId = obj => {
-		return obj.result._id == params.id;
+		return obj.id == params.id;
 	};
 
 	let characterToBeDisplayed = store.peopleArray.find(findId);
@@ -44,28 +44,28 @@ export function CharacterDescription(props) {
 				</div>
 				<div className="col-6">
 					<h1>
-						<strong> {characterToBeDisplayed.result.properties.name} </strong>
+						<strong> {characterToBeDisplayed.name} </strong>
 					</h1>
-					<p className="textDescription">{characterToBeDisplayed.result.description}</p>
+					<p className="textDescription">{characterToBeDisplayed.description}</p>
 				</div>
 			</div>
 			<div className="row mt-3">
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Height: </strong>
-						{characterToBeDisplayed.result.properties.height}
+						{characterToBeDisplayed.height}
 					</p>
 				</div>
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Hair color: </strong>
-						{characterToBeDisplayed.result.properties.hair_color}
+						{characterToBeDisplayed.hair_color}
 					</p>
 				</div>
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Birth-year: </strong>
-						{characterToBeDisplayed.result.properties.birth_year}
+						{characterToBeDisplayed.birth_year}
 					</p>
 				</div>
 			</div>
@@ -73,19 +73,19 @@ export function CharacterDescription(props) {
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Mass: </strong>
-						{characterToBeDisplayed.result.properties.mass}
+						{characterToBeDisplayed.mass}
 					</p>
 				</div>
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Skin color: </strong>
-						{characterToBeDisplayed.result.properties.skin_color}
+						{characterToBeDisplayed.skin_color}
 					</p>
 				</div>
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Gender: </strong>
-						{characterToBeDisplayed.result.properties.gender}
+						{characterToBeDisplayed.gender}
 					</p>
 				</div>
 			</div>
@@ -103,7 +103,7 @@ export function PlanetDescription(props) {
 
 	// Find the element to be displayed
 	const findId = obj => {
-		return obj.result._id == params.id;
+		return obj.id == params.id;
 	};
 
 	let PlanetToBeDisplayed = store.planetsArray.find(findId);
@@ -124,28 +124,28 @@ export function PlanetDescription(props) {
 				</div>
 				<div className="col-6">
 					<h1>
-						<strong> {PlanetToBeDisplayed.result.properties.name} </strong>
+						<strong> {PlanetToBeDisplayed.name} </strong>
 					</h1>
-					<p className="textDescription">{PlanetToBeDisplayed.result.description}</p>
+					<p className="textDescription">{PlanetToBeDisplayed.description}</p>
 				</div>
 			</div>
 			<div className="row mt-3">
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Diameter: </strong>
-						{PlanetToBeDisplayed.result.properties.diameter}
+						{PlanetToBeDisplayed.diameter}
 					</p>
 				</div>
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Population: </strong>
-						{PlanetToBeDisplayed.result.properties.population}
+						{PlanetToBeDisplayed.population}
 					</p>
 				</div>
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Climate: </strong>
-						{PlanetToBeDisplayed.result.properties.climate}
+						{PlanetToBeDisplayed.climate}
 					</p>
 				</div>
 			</div>
@@ -153,19 +153,19 @@ export function PlanetDescription(props) {
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Terrain: </strong>
-						{PlanetToBeDisplayed.result.properties.terrain}
+						{PlanetToBeDisplayed.terrain}
 					</p>
 				</div>
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Rotation Period: </strong>
-						{PlanetToBeDisplayed.result.properties.rotation_period}
+						{PlanetToBeDisplayed.rotation_period}
 					</p>
 				</div>
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Orbital Period: </strong>
-						{PlanetToBeDisplayed.result.properties.orbital_period}
+						{PlanetToBeDisplayed.orbital_period}
 					</p>
 				</div>
 			</div>
@@ -173,7 +173,7 @@ export function PlanetDescription(props) {
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Surface Water: </strong>
-						{PlanetToBeDisplayed.result.properties.surface_water}
+						{PlanetToBeDisplayed.surface_water}
 					</p>
 				</div>
 			</div>
@@ -191,7 +191,7 @@ export function StarshipDescription(props) {
 
 	// Find the element to be displayed
 	const findId = obj => {
-		return obj.result._id == params.id;
+		return obj.id == params.id;
 	};
 
 	let StarshipToBeDisplayed = store.starshipsArray.find(findId);
@@ -214,28 +214,28 @@ export function StarshipDescription(props) {
 				</div>
 				<div className="col-6">
 					<h1>
-						<strong> {StarshipToBeDisplayed.result.properties.name} </strong>
+						<strong> {StarshipToBeDisplayed.name} </strong>
 					</h1>
-					<p className="textDescription">{StarshipToBeDisplayed.result.description}</p>
+					<p className="textDescription">{StarshipToBeDisplayed.description}</p>
 				</div>
 			</div>
 			<div className="row mt-3">
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Model: </strong>
-						{StarshipToBeDisplayed.result.properties.model}
+						{StarshipToBeDisplayed.model}
 					</p>
 				</div>
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Starship Class: </strong>
-						{StarshipToBeDisplayed.result.properties.starship_class}
+						{StarshipToBeDisplayed.starship_class}
 					</p>
 				</div>
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Manufacturer: </strong>
-						{StarshipToBeDisplayed.result.properties.manufacturer}
+						{StarshipToBeDisplayed.manufacturer}
 					</p>
 				</div>
 			</div>
@@ -243,19 +243,19 @@ export function StarshipDescription(props) {
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Cost In Credits: </strong>
-						{StarshipToBeDisplayed.result.properties.cost_in_credits}
+						{StarshipToBeDisplayed.cost_in_credits}
 					</p>
 				</div>
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Length: </strong>
-						{StarshipToBeDisplayed.result.properties.length}
+						{StarshipToBeDisplayed.length}
 					</p>
 				</div>
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Crew: </strong>
-						{StarshipToBeDisplayed.result.properties.crew}
+						{StarshipToBeDisplayed.crew}
 					</p>
 				</div>
 			</div>
@@ -263,19 +263,19 @@ export function StarshipDescription(props) {
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Passengers: </strong>
-						{StarshipToBeDisplayed.result.properties.passengers}
+						{StarshipToBeDisplayed.passengers}
 					</p>
 				</div>
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Consumables: </strong>
-						{StarshipToBeDisplayed.result.properties.consumables}
+						{StarshipToBeDisplayed.consumables}
 					</p>
 				</div>
 				<div className="col-4">
 					<p style={{ fontSize: "40px", color: "white" }}>
 						<strong> Max Atmosphering Speed: </strong>
-						{StarshipToBeDisplayed.result.properties.max_atmosphering_speed}
+						{StarshipToBeDisplayed.max_atmosphering_speed}
 					</p>
 				</div>
 			</div>

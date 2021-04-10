@@ -19,20 +19,15 @@ export const Home = () => {
 
 	// Fetch the data from the SW API when home is loaded
 	useEffect(() => {
-		// Store the username and user ID of the person that logged in
-		actions.getUserLogged();
+		if (sessionStorage.getItem("login") == "True") {
+			// Store the username and user ID of the person that logged in
+			actions.getUserLogged();
 
-		// Get the Characters
-		actions.getPeopleFetch();
+			// Get the Favorite List
+			actions.loadInitialFavList();
 
-		// Get Planets
-		actions.getPlanetFetch();
-
-		// Get Starships
-		actions.getStarShipsFetch();
-
-		// Get the Favorite List
-		actions.loadInitialFavList();
+			sessionStorage.setItem("login", "Done");
+		}
 	}, []);
 
 	return (

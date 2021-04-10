@@ -36,6 +36,7 @@ export function LogIn() {
 				if (result.msg == "ok") {
 					setAuth(true);
 					sessionStorage.setItem("token", result.token);
+					sessionStorage.setItem("login", "True");
 					console.log(result.token);
 				}
 			})
