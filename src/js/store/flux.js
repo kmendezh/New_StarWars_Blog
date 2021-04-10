@@ -13,16 +13,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 			indexArray: [
 				{ peopleStartIndex: 0, peopleIndex: 6 },
 				{ planetStartIndex: 0, planetIndex: 6 },
-				{ starshipStartIndex: 1, starshipIndex: 11 }
+				{ starshipStartIndex: 0, starshipIndex: 6 }
 			],
 
 			visibilityUsername: "hidden",
 
 			userName: "",
 
-			userId: "",
-
-			loggedIn: false
+			userId: ""
 		},
 		actions: {
 			// Load the initial favorite list
@@ -69,16 +67,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					.then(response => response.text())
 					.then(result => console.log(result))
 					.catch(error => console.log("error", error));
-			},
-
-			// Indicate if the user has logged in
-			setLogin: state => {
-				//get the store
-				const store = getStore();
-				let tmp = store.loggedIn;
-				tmp = state;
-				//reset the global store
-				setStore({ loggedIn: tmp });
 			},
 
 			// Set the username
@@ -205,12 +193,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let tmpUrl = "";
 				for (let i = startIdx; i < limitLength; i++) {
 					tmpUrl = urlStringPeople + (i + 1).toString();
-					console.log(tmpUrl);
 					await fetch(tmpUrl, requestOptions)
 						.then(response => response.json())
 						.then(result => {
 							result.name != undefined ? tmpArray.push(result) : console.log("Undefined message");
-							console.log(result);
 						})
 						.catch(error => console.log("error", error));
 				}
@@ -227,7 +213,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let startIdx = store.indexArray[1].planetStartIndex;
 				let limitLength = store.indexArray[1].planetIndex;
 				// URLs of the SWAPI
-				let urlStringPlanet = "https://www.swapi.tech/api/planets/";
+				let urlStringPlanet = "https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/get_planet_by_id/";
 
 				// GET Request Header
 				let requestOptions = {
@@ -239,17 +225,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let tmpUrl = "";
 				for (let i = startIdx; i < limitLength; i++) {
 					tmpUrl = urlStringPlanet + (i + 1).toString();
-					console.log(tmpUrl);
 					await fetch(tmpUrl, requestOptions)
 						.then(response => response.json())
 						.then(result => {
-							result.message == "ok" ? tmpArray.push(result) : console.log("Undefined message");
+							result.name != undefined ? tmpArray.push(result) : console.log("Undefined message");
 						})
 						.catch(error => console.log("error", error));
 				}
 
 				//reset the global store
-				setStore({ tmpArray: tmpArray });
+				setStore({ planetsArray: tmpArray });
+				console.log(store.planetsArray);
 			},
 
 			getStarShipsFetch: async () => {
@@ -260,7 +246,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let startIdx = store.indexArray[2].starshipStartIndex;
 				let limitLength = store.indexArray[2].starshipIndex; // Some indexes never worked like /1 and /4
 				// URLs of the SWAPI
-				let urlStringStarships = "https://www.swapi.tech/api/starships/";
+				let urlStringStarships = "https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/get_starship_by_id/";
 
 				// GET Request Header
 				let requestOptions = {
@@ -272,18 +258,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 				let tmpUrl = "";
 				for (let i = startIdx; i < limitLength; i++) {
 					tmpUrl = urlStringStarships + (i + 1).toString();
-					console.log(tmpUrl);
 					await fetch(tmpUrl, requestOptions)
 						.then(response => response.json())
 						.then(result => {
-							result.message == "ok" ? tmpArray.push(result) : console.log("Undefined message");
+							result.model != undefined ? tmpArray.push(result) : console.log("Undefined message");
 						})
 						.catch(error => console.log("error", error));
 				}
 
 				//reset the global store
-				console.log(tmpArray);
-				setStore({ tmpArray: tmpArray });
+				setStore({ starshipsArray: tmpArray });
 			}
 		}
 	};

@@ -9,15 +9,13 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	// Planet Array
-	let planetCards = store.planetsArray.map(element => <CardPlanet key={element.result._id} planetInfo={element} />);
+	let planetCards = store.planetsArray.map(element => <CardPlanet key={element.id} planetInfo={element} />);
 
 	// People Array
 	let peopleCards = store.peopleArray.map(element => <CardCharacter key={element.id} peopleInfo={element} />);
 
 	// StarShips/Vehicles Array
-	let starshipsCards = store.starshipsArray.map(element => (
-		<CardVehicle key={element.result._id} starshipsInfo={element} />
-	));
+	let starshipsCards = store.starshipsArray.map(element => <CardVehicle key={element.id} starshipsInfo={element} />);
 
 	// Fetch the data from the SW API when home is loaded
 	useEffect(() => {
@@ -26,6 +24,12 @@ export const Home = () => {
 
 		// Get the Characters
 		actions.getPeopleFetch();
+
+		// Get Planets
+		actions.getPlanetFetch();
+
+		// Get Starships
+		actions.getStarShipsFetch();
 
 		// Get the Favorite List
 		actions.loadInitialFavList();

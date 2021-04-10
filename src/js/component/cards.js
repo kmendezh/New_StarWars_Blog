@@ -67,21 +67,21 @@ export function CardPlanet(prop) {
 				style={{ width: "100%", height: "200px" }}
 			/>
 			<div className="card-body">
-				<h4 className="card-title">{prop.planetInfo.result.properties.name}</h4>
+				<h4 className="card-title">{prop.planetInfo.name}</h4>
 				<div className="card-text">
 					<div className="row">
-						<p> Diameter: {prop.planetInfo.result.properties.diameter}</p>
+						<p> Diameter: {prop.planetInfo.diameter}</p>
 					</div>
 					<div className="row">
-						<p> Population: {prop.planetInfo.result.properties.population}</p>
+						<p> Population: {prop.planetInfo.population}</p>
 					</div>
 					<div className="row">
-						<p> Climate: {prop.planetInfo.result.properties.climate}</p>
+						<p> Climate: {prop.planetInfo.climate}</p>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-8">
-						<Link to={"/planet/" + prop.planetInfo.result._id}>
+						<Link to={"/planet/" + prop.planetInfo.id}>
 							<div className="btn btn-secondary"> More information </div>
 						</Link>
 					</div>
@@ -112,21 +112,21 @@ export function CardVehicle(prop) {
 				style={{ width: "100%", height: "200px" }}
 			/>
 			<div className="card-body">
-				<h4 className="card-title">{prop.starshipsInfo.result.properties.name}</h4>
+				<h4 className="card-title">{prop.starshipsInfo.model}</h4>
 				<div className="card-text">
 					<div className="row">
-						<p> Model: {prop.starshipsInfo.result.properties.model}</p>
+						<p> Model: {prop.starshipsInfo.model}</p>
 					</div>
 					<div className="row">
-						<p> Length: {prop.starshipsInfo.result.properties.length}</p>
+						<p> Length: {prop.starshipsInfo.length}</p>
 					</div>
 					<div className="row">
-						<p> Crew: {prop.starshipsInfo.result.properties.crew}</p>
+						<p> Crew: {prop.starshipsInfo.crew}</p>
 					</div>
 				</div>
 				<div className="row">
 					<div className="col-8">
-						<Link to={"/starship/" + prop.starshipsInfo.result._id}>
+						<Link to={"/starship/" + prop.starshipsInfo.id}>
 							<div className="btn btn-secondary"> More information </div>
 						</Link>
 					</div>
@@ -134,7 +134,7 @@ export function CardVehicle(prop) {
 						<a
 							href="#!"
 							className="btn btn-secondary"
-							onClick={() => actions.addFavorites(prop.starshipsInfo.result.properties.name)}>
+							onClick={() => actions.addFavorites(prop.starshipsInfo.model)}>
 							<i className="fas fa-heart" style={{ color: "white", fontSize: "20px" }} />
 						</a>
 					</div>

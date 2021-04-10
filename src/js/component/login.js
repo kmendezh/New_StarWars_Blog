@@ -34,7 +34,6 @@ export function LogIn() {
 				console.log(result.msg);
 				// If the credentials were correct, enter to Home and save the token and user ID
 				if (result.msg == "ok") {
-					actions.setLogin(true);
 					setAuth(true);
 					sessionStorage.setItem("token", result.token);
 					console.log(result.token);
