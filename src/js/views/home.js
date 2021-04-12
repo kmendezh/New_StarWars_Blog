@@ -17,6 +17,10 @@ export const Home = () => {
 	// StarShips/Vehicles Array
 	let starshipsCards = store.starshipsArray.map(element => <CardVehicle key={element.id} starshipsInfo={element} />);
 
+	useEffect(() => {
+		actions.loadInitialFavList();
+	}, []);
+
 	return (
 		<div className="flexBox">
 			<div className="flexHeader">

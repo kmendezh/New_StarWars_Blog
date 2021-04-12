@@ -73,7 +73,8 @@ export function CardCharacter(prop) {
 // Function to print the planet card
 export function CardPlanet(prop) {
 	// Get Store
-	const { store, actions } = useContext(Context);
+    const { store, actions } = useContext(Context);
+    
 	return (
 		<div className="card mr-2" style={{ marginBottom: "20px" }}>
 			<img
