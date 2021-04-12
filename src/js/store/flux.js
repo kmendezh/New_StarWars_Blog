@@ -23,8 +23,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 			userId: ""
 		},
 		actions: {
+			// Clear arrayOfFavorites
+			cleararrayOfFavorites: () => {
+				//get the store
+				const store = getStore();
+				let tmp = store.arrayOfFavorites;
+				tmp = [];
+				//reset the global store
+				setStore({ arrayOfFavorites: tmp });
+			},
+
+			// Logout option
+			logOut: () => {
+				sessionStorage.setItem("token", "");
+				// Get the actions
+				const actions = getActions();
+				actions.cleararrayOfFavorites();
+				console.log("Logout");
+			},
+
 			// Load the initial favorite list
-			loadInitialFavList: () => {
+			loadInitialFavList: async () => {
 				// Get the actions
 				const actions = getActions();
 
@@ -38,14 +57,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					redirect: "follow"
 				};
 				// Endpoint to get the favorite list
-				fetch("https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/get_fav_user_logged", requestOptions)
+				await fetch(
+					"https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/get_fav_user_logged",
+					requestOptions
+				)
 					.then(response => response.json())
 					.then(result => {
-						console.log("Favorites");
-						console.log(result[0].id);
 						// Load the favorites obtained from the user logged
 						if (result[0].id != undefined) {
 							actions.loadFavorites(result);
+							console.log("Fav loaded", result);
 						}
 					})
 					.catch(error => console.log("error", error));
@@ -131,8 +152,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				// Create tmp variable to store the favorites array
 				let tmpArray = store.arrayOfFavorites;
-				tmpArray = fav_Array;
+				// Create an auxiliar array to change the name of the attributes
+				let auxArray = [];
+				console.log("Fav array received", fav_Array);
+				for (let i = 0; i < fav_Array.length; i++) {
+					let id_int = i;
+					let tmpObj = {
+						id: id_int,
+						object_Name: fav_Array[i].object_name,
+						object_Type: fav_Array[i].object_type
+					};
+					auxArray.push(tmpObj);
+				}
+
+				tmpArray = auxArray;
 				setStore({ arrayOfFavorites: tmpArray });
+				console.log("Fav rec", store.arrayOfFavorites);
 			},
 
 			addFavorites: async cardObject => {
@@ -140,50 +175,75 @@ const getState = ({ getStore, getActions, setStore }) => {
 				// Get the store
 				const store = getStore();
 				let tmpArray = store.arrayOfFavorites;
+				console.log("Favorite loaded before adding a new one", tmpArray);
 				// Get actions
 				const actions = getActions();
 
-				// Create a tmp object to store the id and the name
-				let tmpObj = {
-					name: cardObject.name,
-					id: cardObject.id
-				};
+				// Get the favorite user list
+				let myHeaders_fav = new Headers();
+				let authString_fav = "Bearer " + sessionStorage.getItem("token");
+				myHeaders_fav.append("Authorization", authString_fav);
 
-				// If it is already in the list, remove it
-				for (let i = 0; i < tmpArray.length; i++) {
-					if (cardObject.name == tmpArray[i].name) {
-						actions.removeFavorites(tmpObj);
-					}
-				}
+				let requestOptions_fav = {
+					method: "GET",
+					headers: myHeaders_fav,
+					redirect: "follow"
+				};
+				// Endpoint to get the favorite list
+				let fav_User_List = [];
+				await fetch(
+					"https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/get_fav_user_logged",
+					requestOptions_fav
+				)
+					.then(response => response.json())
+					.then(result => {
+						console.log("Favorites detected");
+						fav_User_List = result;
+						console.log(fav_User_List);
+					})
+					.catch(error => console.log("error", error));
+
+				// // If it is already in the list, remove it
+				// for (let i = 0; i < tmpArray.length; i++) {
+				// 	if (cardObject.name == fav_User_List[i].object_Name) {
+				// 		actions.removeFavorites(fav_User_List[i]);
+				// 	}
+				// }
 
 				// Load the Selected Favorite to the list
-				var myHeaders = new Headers();
+				let myHeaders = new Headers();
 				let auth = "Bearer " + sessionStorage.getItem("token");
 				myHeaders.append("Authorization", auth);
 				myHeaders.append("Content-Type", "application/json");
 
-				var raw = JSON.stringify({
+				let raw = JSON.stringify({
 					object_Type: cardObject.type,
 					object_Name: cardObject.name
 				});
 
-				var requestOptions = {
+				let requestOptions = {
 					method: "POST",
 					headers: myHeaders,
 					body: raw,
 					redirect: "follow"
 				};
 
-				fetch("https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/add_fav_to_list", requestOptions)
+				await fetch("https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/add_fav_to_list", requestOptions)
 					.then(response => response.text())
 					.then(result => console.log(result))
 					.catch(error => console.log("error", error));
 
-				tmpArray.push(tmpObj);
-				console.log(tmpArray);
+				let newItem = {
+					object_Type: cardObject.type,
+					object_Name: cardObject.name,
+					id: cardObject.id
+				};
+
+				tmpArray.push(newItem);
 				// reset the global store
 				setStore({ arrayOfFavorites: tmpArray });
-				console.log(cardObject);
+				console.log("Array of Favorites");
+				console.log(store.arrayOfFavorites);
 			},
 
 			removeFavorites: async favObj => {
@@ -191,9 +251,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 				let tmpArray = store.arrayOfFavorites;
 				let auxArray = [];
+				console.log("Inside of remove action");
+				console.log(store.arrayOfFavorites);
+				console.log(favObj);
 				for (let i = 0; i < store.arrayOfFavorites.length; i++) {
 					// Copy all the data except the item to be removed
-					if (tmpArray.name != favObj.name) {
+					if (tmpArray[i].object_Name != favObj.object_Name) {
 						auxArray.push(store.arrayOfFavorites[i]);
 					}
 				}
@@ -201,6 +264,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ arrayOfFavorites: tmpArray });
 				console.log(store.arrayOfFavorites);
+
+				// Get the favorite user list
+				let myHeaders_fav = new Headers();
+				let authString_fav = "Bearer " + sessionStorage.getItem("token");
+				myHeaders_fav.append("Authorization", authString_fav);
+
+				let requestOptions_fav = {
+					method: "GET",
+					headers: myHeaders_fav,
+					redirect: "follow"
+				};
+				// Endpoint to get the favorite list
+				let fav_User_List = [];
+				await fetch(
+					"https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/get_fav_user_logged",
+					requestOptions_fav
+				)
+					.then(response => response.json())
+					.then(result => {
+						console.log("Favorites to be removed");
+						fav_User_List = result;
+						console.log(fav_User_List);
+					})
+					.catch(error => console.log("error", error));
+
+				// Get the item to be deleted
+				let favId = 0;
+				for (let j = 0; j < fav_User_List.length; j++) {
+					if (fav_User_List[j].object_name == favObj.object_Name) {
+						favId = fav_User_List[j].id;
+						console.log("Favorite ID found");
+						console.log(favId);
+						break;
+					}
+				}
 
 				// Remove the Favorite from the API
 				let myHeaders = new Headers();
@@ -214,8 +312,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 
 				let url =
-					"https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/delete_fav_from_list/" +
-					favObj.id.toString();
+					"https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/delete_fav_from_list/" + favId.toString();
 
 				await fetch(url, requestOptions)
 					.then(response => response.text())

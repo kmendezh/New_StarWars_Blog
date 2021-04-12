@@ -17,16 +17,6 @@ export const Home = () => {
 	// StarShips/Vehicles Array
 	let starshipsCards = store.starshipsArray.map(element => <CardVehicle key={element.id} starshipsInfo={element} />);
 
-	// Fetch the data from the SW API when home is loaded
-	useEffect(() => {
-		if (sessionStorage.getItem("login") == "True") {
-			// Store the username and user ID of the person that logged in
-			actions.getUserLogged();
-
-			sessionStorage.setItem("login", "Done");
-		}
-	}, []);
-
 	return (
 		<div className="flexBox">
 			<div className="flexHeader">

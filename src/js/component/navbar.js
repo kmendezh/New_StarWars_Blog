@@ -19,7 +19,7 @@ export const Navbar = () => {
 		<div className="ddicon" key={element.id.toString()}>
 			<div className="row" style={{ width: "95%" }}>
 				<div className="col-8">
-					<DropdownItem>{element.name}</DropdownItem>
+					<DropdownItem>{element.object_Name}</DropdownItem>
 				</div>
 				<div className="col-4">
 					<DropdownItem onClick={() => actions.removeFavorites(element)}>
@@ -63,13 +63,17 @@ export const Navbar = () => {
 					</div>
 				</div>
 				<div className="col-6">
-					<div className="ddicon dropdown " style={{ visibility: store.visibilityUsername }}>
+					<div className="ddicon dropdown ">
 						<Dropdown isOpen={dropdownOpen2} toggle={toggle2} size="lg">
 							<DropdownToggle className="ddtext" caret>
-								{store.userName}
+								<i className="fas fa-power-off" />
 							</DropdownToggle>
 							<DropdownMenu>
-								<DropdownItem>Logout</DropdownItem>
+								<DropdownItem>
+									<Link to={"/"} onClick={() => actions.logOut()}>
+										Logout
+									</Link>
+								</DropdownItem>
 							</DropdownMenu>
 						</Dropdown>
 					</div>
