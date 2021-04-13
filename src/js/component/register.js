@@ -4,9 +4,9 @@ import { func } from "prop-types";
 import { Context } from "../store/appContext";
 import "/workspace/New_StarWars_Blog/src/styles/login.css";
 
-const urlAPI = "https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/login";
+const urlAPI = "https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/register";
 
-export function LogIn() {
+export function Register() {
 	// Get Store
 	const { store, actions } = useContext(Context);
 
@@ -47,12 +47,13 @@ export function LogIn() {
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [userName, setUserName] = useState("");
 	const [authentication, setAuth] = useState(false);
 
 	return (
 		<form onSubmit={handleSubmit}>
 			<div className="container">
-				<h1 className="header"> Login</h1>
+				<h1 className="header"> Sign up</h1>
 
 				<div className="input-group input-group-lg userInput">
 					<div className="input-group-prepend">
@@ -85,18 +86,29 @@ export function LogIn() {
 						placeholder="Password"
 					/>
 				</div>
+
+				<div className="input-group input-group-lg userInput">
+					<div className="input-group-prepend">
+						<span className="input-group-text" id="inputGroup-sizing-lg">
+							<i style={{ color: "black", fontSize: "18px" }} className="fab fa-jedi-order" />
+						</span>
+					</div>
+					<input
+						onChange={e => setUserName(e.target.value)}
+						type="text"
+						className="form-control"
+						aria-label="Large"
+						aria-describedby="inputGroup-sizing-sm"
+						placeholder="username"
+					/>
+				</div>
 				<div style={{ textAlign: "center", marginBottom: "20px" }}>
 					<button type="submit" className="btn btn-light">
-						Login
+						Register
 					</button>
 				</div>
-
-				<div className="footer">
-					Do not have an account?
-					<Link to={"/register"}> Sign up</Link>
-				</div>
 			</div>
-			{authentication ? <Redirect to="/home" /> : null}
+			{authentication ? <Redirect to="/" /> : null}
 		</form>
 	);
 }

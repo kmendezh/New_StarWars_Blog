@@ -73,8 +73,26 @@ export function CardCharacter(prop) {
 // Function to print the planet card
 export function CardPlanet(prop) {
 	// Get Store
-    const { store, actions } = useContext(Context);
-    
+	const { store, actions } = useContext(Context);
+
+	let tmpObject = {
+		id: prop.planetInfo.id,
+		name: prop.planetInfo.name,
+		diameter: prop.planetInfo.diameter,
+		rotation_period: prop.planetInfo.rotation_period,
+		orbital_period: prop.planetInfo.orbital_period,
+		gravity: prop.planetInfo.gravity,
+		population: prop.planetInfo.population,
+		climate: prop.planetInfo.climate,
+		terrain: prop.planetInfo.terrain,
+		surface_water: prop.planetInfo.surface_water,
+		created: prop.planetInfo.created,
+		edited: prop.planetInfo.edited,
+		url: prop.planetInfo.url,
+		description: prop.planetInfo.description,
+		type: "P"
+	};
+
 	return (
 		<div className="card mr-2" style={{ marginBottom: "20px" }}>
 			<img
@@ -103,10 +121,7 @@ export function CardPlanet(prop) {
 						</Link>
 					</div>
 					<div className="col-4">
-						<a
-							href="#!"
-							className="btn btn-secondary"
-							onClick={() => actions.addFavorites(prop.planetInfo.result.properties.name)}>
+						<a href="#!" className="btn btn-secondary" onClick={() => actions.addFavorites(tmpObject)}>
 							<i className="fas fa-heart" style={{ color: "white", fontSize: "20px" }} />
 						</a>
 					</div>
@@ -120,6 +135,26 @@ export function CardPlanet(prop) {
 export function CardVehicle(prop) {
 	// Get Store
 	const { store, actions } = useContext(Context);
+
+	let tmpObject = {
+		id: prop.starshipsInfo.id,
+		name: prop.starshipsInfo.model,
+		starship_class: prop.starshipsInfo.starship_class,
+		manufacturer: prop.starshipsInfo.manufacturer,
+		cost_in_credits: prop.starshipsInfo.cost_in_credits,
+		length: prop.starshipsInfo.length,
+		crew: prop.starshipsInfo.crew,
+		passengers: prop.starshipsInfo.passengers,
+		max_atmosphering_speed: prop.starshipsInfo.max_atmosphering_speed,
+		hyperdrive_rating: prop.starshipsInfo.hyperdrive_rating,
+		mglt: prop.starshipsInfo.mglt,
+		cargo_capacity: prop.starshipsInfo.cargo_capacity,
+		consumables: prop.starshipsInfo.consumables,
+		url: prop.starshipsInfo.url,
+		description: prop.starshipsInfo.description,
+		type: "S"
+	};
+
 	return (
 		<div className="card mr-2" style={{ marginBottom: "20px" }}>
 			<img
@@ -148,10 +183,7 @@ export function CardVehicle(prop) {
 						</Link>
 					</div>
 					<div className="col-4">
-						<a
-							href="#!"
-							className="btn btn-secondary"
-							onClick={() => actions.addFavorites(prop.starshipsInfo.model)}>
+						<a href="#!" className="btn btn-secondary" onClick={() => actions.addFavorites(tmpObject)}>
 							<i className="fas fa-heart" style={{ color: "white", fontSize: "20px" }} />
 						</a>
 					</div>

@@ -7,6 +7,7 @@ import { Demo } from "./views/demo";
 import { Single } from "./views/single";
 import { CardInfo } from "./views/cardInfo";
 import { LoginPage } from "./views/loginPage";
+import { RegisterPage } from "./views/registerPage";
 import { CharacterDescription } from "./views/cardInfo";
 import { PlanetDescription } from "./views/cardInfo";
 import { StarshipDescription } from "./views/cardInfo";
@@ -29,6 +30,9 @@ const Layout = () => {
 					<Switch>
 						<Route exact path="/">
 							<LoginPage />
+						</Route>
+						<Route exact path="/register">
+							<RegisterPage />
 						</Route>
 						<Route exact path="/home">
 							<Home />
