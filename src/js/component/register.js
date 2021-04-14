@@ -4,13 +4,13 @@ import { func } from "prop-types";
 import { Context } from "../store/appContext";
 import "/workspace/New_StarWars_Blog/src/styles/login.css";
 
-const urlAPI = "https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/register";
+const urlAPI = "https://3000-salmon-scorpion-k7oalosd.ws-us03.gitpod.io/add_new_user";
 
 export function Register() {
 	// Get Store
 	const { store, actions } = useContext(Context);
 
-	const handleSubmit = e => {
+	const handleSubmit = async e => {
 		e.preventDefault();
 
 		const myHeaders = new Headers();
@@ -18,7 +18,8 @@ export function Register() {
 
 		const raw = JSON.stringify({
 			email: email,
-			password: password
+			pswd: password,
+			user_name: userName
 		});
 
 		const requestOptions = {
@@ -28,16 +29,33 @@ export function Register() {
 			redirect: "follow"
 		};
 
-		fetch(urlAPI, requestOptions)
-			.then(response => response.json())
+		await fetch(urlAPI, requestOptions)
+			.then(response => {
+				response.json();
+				console.log("Password", password);
+				console.log("Username", userName);
+				console.log("Email", email);
+				// If the password was empty, print the error message
+				if (response.status == 401) {
+					setValidationError(true);
+					setErrorMsg("Invalid password, username or email");
+				}
+
+				// If the username is repeated, print the error message
+				else if (response.status == 402) {
+					setValidationError(true);
+					setErrorMsg("The username is being used by someone else");
+				}
+
+				// If the email is repeated, print the error message
+				else if (response.status == 403) {
+					setValidationError(true);
+					setErrorMsg("The email is already registered");
+				}
+			})
 			.then(result => {
-				console.log(result.msg);
-				// If the credentials were correct, enter to Home and save the token and user ID
-				if (result.msg == "ok") {
+				if (!validationError) {
 					setAuth(true);
-					sessionStorage.setItem("token", result.token);
-					sessionStorage.setItem("login", "True");
-					console.log(result.token);
 				}
 			})
 			.catch(error => {
@@ -45,13 +63,36 @@ export function Register() {
 			});
 	};
 
+	const closeWindow = () => {
+		setValidationError(false);
+		setErrorMsg("");
+	};
+
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [userName, setUserName] = useState("");
 	const [authentication, setAuth] = useState(false);
+	const [validationError, setValidationError] = useState(false);
+	const [errorMsg, setErrorMsg] = useState("");
 
 	return (
 		<form onSubmit={handleSubmit}>
+			{validationError ? (
+				<div
+					className="alert alert-danger alert-dismissible fade show"
+					role="alert"
+					style={{ width: "50%", margin: "auto" }}>
+					{errorMsg}
+					<button
+						type="button"
+						className="close"
+						data-dismiss="alert"
+						aria-label="Close"
+						onClick={closeWindow}>
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			) : null}
 			<div className="container">
 				<h1 className="header"> Sign up</h1>
 

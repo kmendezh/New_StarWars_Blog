@@ -38,6 +38,9 @@ export function LogIn() {
 					sessionStorage.setItem("token", result.token);
 					sessionStorage.setItem("login", "True");
 					console.log(result.token);
+				} else {
+					setValidationError(true);
+					setErrorMsg(result.msg);
 				}
 			})
 			.catch(error => {
@@ -45,12 +48,35 @@ export function LogIn() {
 			});
 	};
 
+	const closeWindow = () => {
+		setValidationError(false);
+		setErrorMsg("");
+	};
+
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [authentication, setAuth] = useState(false);
+	const [validationError, setValidationError] = useState(false);
+	const [errorMsg, setErrorMsg] = useState("");
 
 	return (
 		<form onSubmit={handleSubmit}>
+			{validationError ? (
+				<div
+					className="alert alert-danger alert-dismissible fade show"
+					role="alert"
+					style={{ width: "50%", margin: "auto" }}>
+					{errorMsg}
+					<button
+						type="button"
+						className="close"
+						data-dismiss="alert"
+						aria-label="Close"
+						onClick={closeWindow}>
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			) : null}
 			<div className="container">
 				<h1 className="header"> Login</h1>
 
